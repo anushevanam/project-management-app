@@ -22,6 +22,25 @@ router.post('/', async (req, res) => {
   res.redirect('/projects');
 });
 
+const Task = require('../models/Task');  // add at top, after Project require
+
+// SHOW – project detail + its tasks
+router.get('/:id', async (req, res) => {
+  const project = await Project.findOne({
+    _id: req.params.id,
+    owner: req.session.userId
+  });
+  if (!project) {
+    req.flash('error', 'Project not found');
+    return res.redirect('/projects');
+  }
+  const tasks = await Task.find({
+    project: project._id,
+    owner:   req.session.userId
+  });
+  res.render('projects/show', { project, tasks });
+});
+
 // EDIT – show edit form
 router.get('/:id/edit', async (req, res) => {
   const proj = await Project.findOne({ _id: req.params.id, owner: req.session.userId });

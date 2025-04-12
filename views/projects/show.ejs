@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1><%= project.name %></h1>
+  <div>
+    <a href="/projects/<%= project._id %>/edit" class="btn btn-secondary">Edit Project</a>
+    <form
+      action="/projects/<%= project._id %>?_method=DELETE"
+      method="POST"
+      class="d-inline"
+    >
+      <button class="btn btn-danger">Delete</button>
+    </form>
+  </div>
+</div>
+
+<p><%= project.description || 'No description provided.' %></p>
+
+<hr>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Tasks</h2>
+  <a
+    href="/projects/<%= project._id %>/tasks/new"
+    class="btn btn-primary"
+  >Add Task</a>
+</div>
+
+<% if (tasks.length === 0) { %>
+  <p>No tasks yet.</p>
+<% } else { %>
+  <ul class="list-group">
+    <% tasks.forEach(task => { %>
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <form
+          action="/projects/<%= project._id %>/tasks/<%= task._id %>?_method=PUT"
+          method="POST"
+          class="d-inline"
+        >
+          <input
+            type="hidden"
+            name="completed"
+            value="<%= task.completed ? 'off' : 'on' %>"
+          >
+          <button class="btn btn-link p-0">
+            <% if (task.completed) { %>
+              <s><%= task.title %></s>
+            <% } else { %>
+              <%= task.title %>
+            <% } %>
+          </button>
+        </form>
+        <div>
+          <a
+            href="/projects/<%= project._id %>/tasks/<%= task._id %>/edit"
+            class="btn btn-sm btn-secondary me-2"
+          >Edit</a>
+          <form
+            action="/projects/<%= project._id %>/tasks/<%= task._id %>?_method=DELETE"
+            method="POST"
+            class="d-inline"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+      </li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<%- include('../partials/footer') %>
