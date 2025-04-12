@@ -1,0 +1,22 @@
+<%- include('../partials/header') %>
+
+<h1>Add Task</h1>
+<form
+  action="/projects/<%= projectId %>/tasks"
+  method="POST"
+  class="mt-4"
+>
+  <div class="mb-3">
+    <label for="title" class="form-label">Task Title</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      class="form-control"
+      required
+    >
+  </div>
+  <button class="btn btn-primary">Add Task</button>
+</form>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,24 @@
+<%- include('../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1>Your Projects</h1>
+  <a href="/projects/new" class="btn btn-primary">New Project</a>
+</div>
+
+<% if (projects.length === 0) { %>
+  <p>You have no projects. <a href="/projects/new">Create one now</a>.</p>
+<% } else { %>
+  <div class="list-group">
+    <% projects.forEach(project => { %>
+      <a
+        href="/projects/<%= project._id %>"
+        class="list-group-item list-group-item-action d-flex justify-content-between"
+      >
+        <span><%= project.name %></span>
+        <small><%= project.createdAt.toLocaleDateString() %></small>
+      </a>
+    <% }) %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer') %>
