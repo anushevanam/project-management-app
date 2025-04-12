@@ -28,15 +28,4 @@
   </div>
   <button class="btn btn-primary">Update Project</button>
 </form>
-<% projects.forEach(project => { %>
-    <a href="/projects/<%= project._id %>" class="list-group-item list-group-item-action d-flex justify-content-between">
-      <span><%= project.name %></span>
-      <small>
-        <%= project.createdAt
-             ? project.createdAt.toLocaleDateString()
-             : '' %>
-      </small>
-    </a>
-  <% }) %>
-  
 <%- include('../partials/footer') %>
